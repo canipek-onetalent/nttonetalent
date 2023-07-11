@@ -15,11 +15,11 @@ SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
 SELECTION-SCREEN END OF BLOCK b1.
 
 SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002.
-  PARAMETERS: p_topla RADIOBUTTON GROUP g1,
-              p_cikar RADIOBUTTON GROUP g1,
-              p_carp  RADIOBUTTON GROUP g1,
-              p_bol   RADIOBUTTON GROUP g1,
-              p_ort   RADIOBUTTON GROUP g1.
+  PARAMETERS: p_topla RADIOBUTTON GROUP g1 MODIF ID rad,
+              p_cikar RADIOBUTTON GROUP g1 MODIF ID rad,
+              p_carp  RADIOBUTTON GROUP g1 MODIF ID rad,
+              p_bol   RADIOBUTTON GROUP g1 MODIF ID rad,
+              p_ort   RADIOBUTTON GROUP g1 MODIF ID rad.
   DATA p_sonuc TYPE p DECIMALS 2.
 SELECTION-SCREEN END OF BLOCK b2.
 
@@ -46,4 +46,5 @@ START-OF-SELECTION.
   ENDCASE.
 
 
-  WRITE p_sonuc.
+  cl_demo_output=>write( p_sonuc ).
+  cl_demo_output=>display(  ).
