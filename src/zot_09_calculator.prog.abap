@@ -17,7 +17,7 @@ SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002.
               p_carp  RADIOBUTTON GROUP g1,
               p_bol   RADIOBUTTON GROUP g1,
               p_ort   RADIOBUTTON GROUP g1.
- DATA         p_sonuc TYPE i.
+DATA p_sonuc TYPE p DECIMALS 2.
 SELECTION-SCREEN END OF BLOCK b2.
 
 
