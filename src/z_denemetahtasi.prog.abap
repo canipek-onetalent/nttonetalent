@@ -5,58 +5,45 @@
 *&---------------------------------------------------------------------*
 REPORT z_denemetahtasi.
 
-TABLES sscrfields.
-DATA: lv_res      TYPE decfloat16,
-      lv_res_char TYPE char10.
-
 SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
-  PARAMETERS: p_value1 TYPE decfloat16 OBLIGATORY,
-              p_value2 TYPE decfloat16 OBLIGATORY,
-              p_add    RADIOBUTTON GROUP g1,
-              p_sub    RADIOBUTTON GROUP g1,
-              p_mul    RADIOBUTTON GROUP g1,
-              p_div    RADIOBUTTON GROUP g1.
-  SELECTION-SCREEN PUSHBUTTON 40(10) but_cal USER-COMMAND cli1.
-  SELECTION-SCREEN BEGIN OF LINE.
-    SELECTION-SCREEN COMMENT (30) res_text MODIF ID cr.
-  SELECTION-SCREEN END OF LINE.
+  PARAMETERS: p_val1 TYPE i,
+              p_val2 TYPE i.
+
+SELECTION-SCREEN COMMENT 2(10) Sayı_1 FOR FIELD p_val1.
+SELECTION-SCREEN COMMENT 2(10) Sayı_2 FOR FIELD p_val2.
+
 SELECTION-SCREEN END OF BLOCK b1.
 
-AT SELECTION-SCREEN.
-  CASE sscrfields.
-    WHEN 'CLI1'.
-      PERFORM calculation USING p_value1
-                                p_value2.
-      LOOP AT SCREEN.
-        IF screen-group1 = 'CR'.
-          lv_res_char = lv_res.
-          CONCATENATE 'Your result is ' lv_res_char
-                      INTO res_text
-                      RESPECTING BLANKS.
-        ENDIF.
-        MODIFY SCREEN.
-*        without modify screen, it still works. why ?
-      ENDLOOP.
+SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002.
+  PARAMETERS: p_topla RADIOBUTTON GROUP g1,
+              p_cikar RADIOBUTTON GROUP g1,
+              p_carp  RADIOBUTTON GROUP g1,
+              p_bol   RADIOBUTTON GROUP g1,
+              p_ort   RADIOBUTTON GROUP g1.
+DATA p_sonuc TYPE p DECIMALS 2.
+SELECTION-SCREEN END OF BLOCK b2.
+
+START-OF-SELECTION.
+
+IF p_val1 IS INITIAL OR p_val2 IS INITIAL.
+  MESSAGE 'Boş değer girişi yapılamaz' TYPE 'W'.
+ELSE.
+  CASE 'X'.
+    WHEN p_topla.
+      p_sonuc = p_val1 + p_val2.
+    WHEN p_cikar.
+      p_sonuc = p_val1 - p_val2.
+    WHEN p_carp.
+      p_sonuc = p_val1 * p_val2.
+    WHEN p_bol.
+      TRY.
+        p_sonuc = p_val1 / p_val2.
+      CATCH cx_sy_zerodivide.
+        MESSAGE 'Sıfıra bölme işlemi yapılamaz' TYPE 'E'.
+      ENDTRY.
+    WHEN p_ort.
+      p_sonuc = ( p_val1 + p_val2 ) / 2.
   ENDCASE.
 
-INITIALIZATION.
-  but_cal = 'Calculate!'.
-
-FORM calculation USING par1 TYPE decfloat16
-                       par2 TYPE decfloat16.
-
-  IF p_add = 'X'.
-    lv_res = par1 + par2.
-  ELSEIF p_sub = 'X'.
-    lv_res = par1 - par2.
-  ELSEIF p_mul = 'X'.
-    lv_res = par1 * par2.
-  ELSEIF p_div = 'X'.
-    TRY.
-        lv_res = par1 / par2.
-      CATCH cx_sy_zerodivide.
-        cl_demo_output=>write( 'Zero division error' ).
-        cl_demo_output=>display( ).
-    ENDTRY.
-  ENDIF.
-ENDFORM.
+  WRITE p_sonuc.
+ENDIF.
