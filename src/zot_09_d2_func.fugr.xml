@@ -11,6 +11,67 @@
      <FUNCNAME>ZOT_09_D2_FUNCMOD</FUNCNAME>
      <SHORT_TEXT>ZOT_09_D2_FUNCMOD</SHORT_TEXT>
     </item>
+    <item>
+     <FUNCNAME>ZOT_09_D3_FUNC</FUNCNAME>
+     <SHORT_TEXT>ZOT_09_D3_FUNC</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IV_NUMBER1</PARAMETER>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IV_NUMBER2</PARAMETER>
+       <TYP>I</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IV_OPERATION</PARAMETER>
+       <TYP>C</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>EV_RESULT</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>CX_SY_ZERODIVIDE</EXCEPTION>
+      </RSEXC>
+      <RSEXC>
+       <EXCEPTION>CX_SY_ASSIGN_CAST_ERROR</EXCEPTION>
+       <IS_RESUMABLE>X</IS_RESUMABLE>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IV_NUMBER1</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IV_NUMBER2</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IV_OPERATION</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EV_RESULT</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CX_SY_ZERODIVIDE</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CX_SY_ASSIGN_CAST_ERROR</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+     <EXCEPTION_CLASSES>X</EXCEPTION_CLASSES>
+    </item>
    </FUNCTIONS>
   </asx:values>
  </asx:abap>

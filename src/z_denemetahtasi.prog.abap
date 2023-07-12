@@ -6,42 +6,18 @@
 REPORT z_denemetahtasi.
 
 
+DATA: lv_number1 TYPE i VALUE 10,
+      lv_number2 TYPE i VALUE 5,
+      lv_op      TYPE c VALUE '*',
+      lv_result  TYPE i.
 
-SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
-
-  PARAMETERS: p_val1 TYPE p DECIMALS 2,
-              p_val2 TYPE p DECIMALS 2.
-
-SELECTION-SCREEN END OF BLOCK b1.
-
-SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE TEXT-002.
-
-  PARAMETERS:
-    p_topla  RADIOBUTTON GROUP g1,
-    p_cikart RADIOBUTTON GROUP g1,
-    p_carp   RADIOBUTTON GROUP g1,
-    p_bol    RADIOBUTTON GROUP g1.
-
-SELECTION-SCREEN END OF BLOCK b2.
-
-DATA: gv_sonuc TYPE p DECIMALS 2.
-
-IF p_topla = abap_true.
-  gv_sonuc = p_val1 + p_val2.
-  cl_demo_output=>write( gv_sonuc ).
-ELSEIF p_cikart = abap_true.
-  gv_sonuc = p_val1 - p_val2.
-  cl_demo_output=>write( gv_sonuc ).
-ELSEIF p_carp = abap_true.
-  gv_sonuc = p_val1 * p_val2.
-  cl_demo_output=>write( gv_sonuc ).
-ELSE.
-  TRY.
-      gv_sonuc = p_val1 / p_val2.
-      cl_demo_output=>write( gv_sonuc ).
-    CATCH cx_sy_zerodivide.
-      cl_demo_output=>write( |Sıfıra bölme işlemi yapılamaz!| ).
-  ENDTRY.
-ENDIF.
-
-cl_demo_output=>display(  ).
+CALL FUNCTION 'ZOT_09_D3_FUNC'
+  EXPORTING
+    iv_number1   = lv_number1
+    iv_number2   = lv_number2
+    iv_operation = lv_op
+  IMPORTING
+    ev_result    = lv_result
+  EXCEPTIONS
+    cx_sy_zerodivide = 1
+    cx_sy_assign_cast_error.
