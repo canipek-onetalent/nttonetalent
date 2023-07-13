@@ -13,3 +13,8 @@
 * INCLUDE LZOT_09_D2_FUNCE...                " Events
 * INCLUDE LZOT_09_D2_FUNCP...                " Local class implement.
 * INCLUDE LZOT_09_D2_FUNCT99.                " ABAP Unit tests
+  INCLUDE LZOT_09_D2_FUNCF00                      . " subprograms
+  INCLUDE LZOT_09_D2_FUNCI00                      . " PAI modules
+  INCLUDE LSVIMFXX                                . " subprograms
+  INCLUDE LSVIMOXX                                . " PBO modules
+  INCLUDE LSVIMIXX                                . " PAI modules
