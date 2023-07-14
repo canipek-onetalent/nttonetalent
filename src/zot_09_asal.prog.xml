@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <PROGDIR>
-    <NAME>ZOT_09_D4_TRIAL_2</NAME>
+    <NAME>ZOT_09_ASAL</NAME>
     <DBAPL>S</DBAPL>
     <SUBC>1</SUBC>
     <FIXPT>X</FIXPT>
@@ -16,7 +16,19 @@
      <TEXTPOOL>
       <item>
        <ID>R</ID>
-       <ENTRY>ZOT_09_D4_trial_2</ENTRY>
+       <ENTRY>ZOT_09_ASAL</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_ILK</KEY>
+       <ENTRY> İlk Sayı</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_SON</KEY>
+       <ENTRY> Son Sayı</ENTRY>
        <LENGTH>17</LENGTH>
       </item>
      </TEXTPOOL>

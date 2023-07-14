@@ -28,8 +28,8 @@ START-OF-SELECTION.
 
 
   CASE 'X'.
-    WHEN p_t_post.
 
+    WHEN p_t_post.
 
 
         DATA gs_newrow TYPE zot_09_t_twitter.
@@ -67,8 +67,8 @@ START-OF-SELECTION.
         ENDIF.
 
 
-    WHEN p_t_chng.
 
+    WHEN p_t_chng.
 
 
         SELECT SINGLE twitter_text
@@ -84,7 +84,9 @@ START-OF-SELECTION.
         ENDIF.
 
 
+
     WHEN p_t_view.
+
 
         SELECT SINGLE twitter_text
         FROM zot_09_t_twitter
