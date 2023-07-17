@@ -128,8 +128,70 @@ REPORT zot_09_d2.
 *cl_demo_output=>display(  ).
 
 
-DATA: lv_number TYPE p.
+DATA: lv_datid1 TYPE i,
+      lv_datid2 TYPE i,
+      lv_diff  TYPE DATS,
+      lv_tdiff TYPE p,
 
-lv_number = FLOOR( 3 / 2 ).
+      lv_years TYPE p,
+      lv_months TYPE p,
+      lv_days   TYPE p,
 
-WRITE lv_number.
+      lv_hrs TYPE p,
+      lv_mins TYPE p,
+      lv_secs TYPE p,
+
+      lv_string TYPE string,
+      lv_integer TYPE i,
+
+      s_datid_low TYPE i VALUE 0,
+      s_datid_high TYPE i VALUE 4.
+
+lv_datid1 = s_datid_low.   " İlk tarih
+lv_datid2 = s_datid_high.  " İkinci tarih
+
+
+        SELECT SINGLE end_date " Bitiş günü
+        FROM ZOT_09_T_ZMN
+        INTO @DATA(lv_enddate)
+        WHERE zmn_id EQ @lv_datid1.
+
+        SELECT SINGLE start_date " Başlangıç günü
+        FROM ZOT_09_T_ZMN
+        INTO @DATA(lv_startdate)
+        WHERE zmn_id EQ @lv_datid1.
+
+        SELECT SINGLE end_time " Bitiş saniyesi
+        FROM ZOT_09_T_ZMN
+        INTO @DATA(lv_endtime)
+        WHERE zmn_id EQ @lv_datid1.
+
+        SELECT SINGLE start_time " Başlangıç saniyesi
+        FROM ZOT_09_T_ZMN
+        INTO @DATA(lv_starttime)
+        WHERE zmn_id EQ @lv_datid1.
+
+
+        IF sy-subrc = 0.
+
+
+
+
+
+              lv_diff = lv_enddate - lv_startdate.
+                WRITE lv_diff.
+
+
+              lv_string = lv_diff.
+                WRITE lv_string.
+
+
+              lv_years = lv_string+0(4).                      " Yıl
+                WRITE lv_years.
+
+              lv_months = lv_string+4(2).                     " Ay
+                WRITE lv_months.
+
+              lv_days = lv_string+6(2).                       " Gün
+                WRITE lv_days.
+         ENDIF.
