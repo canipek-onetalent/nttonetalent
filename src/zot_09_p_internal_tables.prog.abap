@@ -5,6 +5,8 @@
 *&---------------------------------------------------------------------*
 REPORT zot_09_p_internal_tables.
 
+
+
 DATA: lt_mat_int TYPE TABLE OF ZOT_00_T_MATERIA,
       ls_mat_int TYPE ZOT_00_T_MATERIA.
 
@@ -12,10 +14,9 @@ SELECT * FROM ZOT_00_T_MATERIA INTO TABLE lt_mat_int.
 
 DATA: lt_mat TYPE TABLE OF ZOT_00_T_MATERIA,
       ls_mat TYPE ZOT_00_T_MATERIA,
-      lv_matnr TYPE c.
+      lv_matnr TYPE c LENGTH 3.
 
-SELECT MAX( matnr ) FROM ZOT_00_T_MATERIA INTO lv_matnr.
-
+      lv_matnr = '10'.
 
 DO 5 TIMES.
 
@@ -41,8 +42,21 @@ DO 5 TIMES.
   CLEAR: ls_mat.
 ENDDO.
 
-LOOP AT lt_mat_int INTO ls_mat WHERE meins = 'ST'.
-    ls_mat-menge = ls_mat-menge + 10.
+DATA: lt_mat_a TYPE TABLE OF zot_00_t_materia,
+      ls_mat_a TYPE zot_00_t_materia.
+
+
+BREAK-POINT.
+
+LOOP AT lt_mat_int INTO ls_mat_int.
+  READ TABLE lt_mat INTO ls_mat
+  WITH KEY meins = ls_mat_int-meins.
+
+  IF sy-subrc = 0.
+    ls_mat_int-menge += 10.
+    MODIFY TABLE lt_mat_int FROM ls_mat_int.
+  ENDIF.
+  CLEAR ls_mat_int.
 ENDLOOP.
 
 DATA lt_combined_table TYPE TABLE OF ZOT_00_T_MATERIA.
@@ -52,25 +66,26 @@ LOOP AT lt_mat_int INTO ls_mat_int.
   APPEND ls_mat_int TO lt_combined_table.
 ENDLOOP.
 
+
 LOOP AT lt_mat INTO ls_mat.
   APPEND ls_mat TO lt_combined_table.
 ENDLOOP.
 
-DATA:  lt_mat2 TYPE TABLE OF ZOT_00_T_MATERIA,
-       ls_mat2 TYPE ZOT_00_T_MATERIA.
+DATA:  lt_mat_col TYPE TABLE OF ZOT_00_T_MATERIA,
+       ls_mat_col TYPE ZOT_00_T_MATERIA.
 
 LOOP AT lt_combined_table INTO ls_mat.
-  ls_mat2-matkl = ls_mat-matkl.
-  ls_mat2-menge = ls_mat-menge.
-  COLLECT ls_mat2 INTO lt_mat2.
-  CLEAR ls_mat2.
+  ls_mat_col-matkl = ls_mat-matkl.
+  ls_mat_col-menge = ls_mat-menge.
+  COLLECT ls_mat_col INTO lt_mat_col.
+  CLEAR ls_mat_col.
 ENDLOOP.
 
 DELETE lt_combined_table WHERE menge < 10.
 
 SORT lt_combined_table ASCENDING BY menge.
 
-SORT lt_mat2 DESCENDING BY menge.
+SORT lt_mat_col DESCENDING BY menge.
 
 cl_demo_output=>display_data( lt_combined_table ).
-cl_demo_output=>display_data( lt_mat2 ).
+cl_demo_output=>display_data( lt_mat_col ).
